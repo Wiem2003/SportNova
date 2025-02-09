@@ -14,8 +14,8 @@ public class UtilisateurService {
         connection = MyDataBase.getMyDataBase().getCnx();
     }
 
-    // CREATE
-    public void ajouterUtilisateur(Utilisateur utilisateur) {
+    // CREATE (Ajouter un utilisateur)
+    public boolean ajouterUtilisateur(Utilisateur utilisateur) {
         String query = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role, date_creation) VALUES (?, ?, ?, ?, ?, NOW())";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
             pst.setString(1, utilisateur.getNom());
@@ -23,12 +23,15 @@ public class UtilisateurService {
             pst.setString(3, utilisateur.getEmail());
             pst.setString(4, utilisateur.getMotDePasse());
             pst.setString(5, utilisateur.getRole());
-            pst.executeUpdate();
-            System.out.println("Utilisateur ajouté !");
+            int rowsAffected = pst.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
+
+
 
     // READ (Lister tous les utilisateurs)
     public List<Utilisateur> getAllUtilisateurs() {
@@ -54,7 +57,7 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
-    // UPDATE
+    // UPDATE (Modifier un utilisateur)
     public void modifierUtilisateur(Utilisateur utilisateur) {
         String query = "UPDATE utilisateur SET nom=?, prenom=?, email=?, mot_de_passe=?, role=? WHERE id=?";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -71,7 +74,7 @@ public class UtilisateurService {
         }
     }
 
-    // DELETE
+    // DELETE (Supprimer un utilisateur)
     public void supprimerUtilisateur(int id) {
         String query = "DELETE FROM utilisateur WHERE id=?";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -81,5 +84,30 @@ public class UtilisateurService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // AUTHENTIFICATION
+    public Utilisateur authentifier(String email, String password) {
+        String query = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?";
+        try (PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, email);
+            pst.setString(2, password);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return new Utilisateur(
+                            rs.getInt("id"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("mot_de_passe"),
+                            rs.getString("role"),
+                            rs.getDate("date_creation")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

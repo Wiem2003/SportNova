@@ -8,11 +8,8 @@ public class Utilisateur {
     private String prenom;
     private String email;
     private String motDePasse;
-    private String role; // "client" ou "coach"
+    private String role;
     private Date dateCreation;
-
-    // Constructeurs
-    public Utilisateur() {}
 
     public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, String role, Date dateCreation) {
         this.id = id;
