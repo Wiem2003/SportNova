@@ -35,7 +35,6 @@
             <TextField fx:id="nomp" layoutX="97.0" layoutY="81.0" promptText="Nom" />
             <TextField fx:id="prenomp" layoutX="97.0" layoutY="123.0" promptText="Prénom" />
             <TextField fx:id="emailp" layoutX="97.0" layoutY="158.0" promptText="Email" />
-
             <TextField fx:id="rolep" layoutX="98.0" layoutY="234.0" promptText="Client ou Coach" />
             <PasswordField fx:id="passwordp" layoutX="97.0" layoutY="199.0" promptText="Mot de passe" />
          </children>

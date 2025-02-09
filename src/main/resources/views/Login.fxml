@@ -14,11 +14,11 @@
    <left>
       <AnchorPane prefHeight="518.0" prefWidth="364.0" BorderPane.alignment="CENTER">
          <children>
-            <!-- ImageView avec un fx:id pour être chargé dynamiquement -->
             <ImageView fx:id="imageView" fitHeight="359.0" fitWidth="386.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/sportnova.png" />
-               </image></ImageView>
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
@@ -31,9 +31,8 @@
             <Label layoutX="42.0" layoutY="135.0" text="Email" />
             <Label layoutX="28.0" layoutY="180.0" text="Mot de passe" />
             <TextField fx:id="emailc" layoutX="110.0" layoutY="132.0" promptText="Email" />
-
-            <Button fx:id="loginc" layoutX="152.0" layoutY="232.0" mnemonicParsing="false" text="Se connecter" />
-            <Label fx:id="createc" layoutX="135.0" layoutY="283.0" text="Créer compte" />
+            <Button fx:id="loginc" layoutX="152.0" layoutY="232.0" mnemonicParsing="false" text="Se connecter" onAction="#handleLogin" />
+            <Label fx:id="createc" layoutX="135.0" layoutY="283.0" text="Créer compte" onMouseClicked="#handleCreateAccount" />
             <PasswordField fx:id="passwordc" layoutX="110.0" layoutY="176.0" promptText="Mot de passe" />
          </children>
       </AnchorPane>

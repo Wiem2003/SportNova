@@ -1,5 +1,8 @@
 package controllers;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,7 +44,7 @@ public class LoginController {
         if (user != null) {
             showAlert("Succès", "Connexion réussie !");
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/controllers/NextPage.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminDashboard.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) loginc.getScene().getWindow();
@@ -55,9 +58,9 @@ public class LoginController {
     }
 
     @FXML
-    private void handleCreateAccount(ActionEvent event) {
+    private void handleCreateAccount(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/controllers/Signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Signup.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) createc.getScene().getWindow();
@@ -66,6 +69,7 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
