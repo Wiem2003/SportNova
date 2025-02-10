@@ -115,19 +115,23 @@ public class UtilisateurService {
             pst.setString(1, "admin@admin.com");
             ResultSet rs = pst.executeQuery();
             if (!rs.next()) {  // Aucun admin trouvé, on le crée
-                Utilisateur defaultAdmin = new Utilisateur(
-                        0,
-                        "Admin",          // Nom
-                        "Default",        // Prénom
-                        "admin@admin.com",// Email
-                        "admin123",       // Mot de passe
-                        "admin",          // Role
-                        null              // La date sera insérée via NOW() dans la requête SQL
-                );
-                if (ajouterUtilisateur(defaultAdmin)) {
-                    System.out.println("Compte administrateur par défaut créé.");
+                if (!isEmailExist("admin@admin.com")) { // Vérifier qu'aucun autre utilisateur n'a cet email
+                    Utilisateur defaultAdmin = new Utilisateur(
+                            0,
+                            "Admin",          // Nom
+                            "Default",        // Prénom
+                            "admin@admin.com",// Email
+                            "admin123",       // Mot de passe (penser à le crypter !)
+                            "admin",          // Role
+                            null              // La date sera insérée via NOW() dans la requête SQL
+                    );
+                    if (ajouterUtilisateur(defaultAdmin)) {
+                        System.out.println("Compte administrateur par défaut créé.");
+                    } else {
+                        System.err.println("Erreur lors de la création du compte administrateur par défaut.");
+                    }
                 } else {
-                    System.err.println("Erreur lors de la création du compte administrateur par défaut.");
+                    System.out.println("Un utilisateur avec cet email existe déjà.");
                 }
             } else {
                 System.out.println("Compte administrateur par défaut déjà existant.");
@@ -136,4 +140,22 @@ public class UtilisateurService {
             e.printStackTrace();
         }
     }
+
+
+
+    public boolean isEmailExist(String email) {
+        String query = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";
+        try (PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, email);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

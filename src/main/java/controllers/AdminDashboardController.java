@@ -41,4 +41,19 @@ public class AdminDashboardController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleAjouterAdminAction(ActionEvent event) throws IOException {
+        // Charger la page pour ajouter un administrateur
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddAdmin.fxml"));
+        Parent root = loader.load();
+
+        // Obtenir la fenêtre actuelle
+        Stage stage = (Stage) gubutton.getScene().getWindow();
+
+        // Ouvrir la fenêtre de création d'un administrateur
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

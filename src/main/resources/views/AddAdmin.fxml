@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="286.0" prefWidth="393.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.AddAdminController">
+    <children>
+        <Label layoutX="75.0" layoutY="14.0" style="-fx-font-size: 20px;" text="Ajouter un administrateur" />
+
+        <Label layoutX="50" layoutY="80" text="Nom:" />
+        <TextField fx:id="txtNom" layoutX="150" layoutY="80" prefWidth="200" />
+
+        <Label layoutX="50" layoutY="120" text="Prénom:" />
+        <TextField fx:id="txtPrenom" layoutX="150" layoutY="120" prefWidth="200" />
+
+        <Label layoutX="50" layoutY="160" text="Email:" />
+        <TextField fx:id="txtEmail" layoutX="150" layoutY="160" prefWidth="200" />
+
+        <Label layoutX="50" layoutY="200" text="Mot de Passe:" />
+        <TextField fx:id="txtMotDePasse" layoutX="150" layoutY="200" prefWidth="200" />
+
+        <Button fx:id="ajouterAdminButton" layoutX="141.0" layoutY="239.0" onAction="#handleAjouterAdminAction" text="Ajouter" />
+        <Button layoutX="316.0" layoutY="239.0" onAction="#handleRetourAction" text="Retour" />
+    </children>
+</AnchorPane>
