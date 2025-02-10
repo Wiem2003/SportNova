@@ -58,7 +58,7 @@ public class UserListController {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditUserList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditUser.fxml"));
             Parent root = loader.load();
 
             EditUserController editUserController = loader.getController();
