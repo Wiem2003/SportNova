@@ -2,7 +2,6 @@ package services;
 
 import models.Utilisateur;
 import tools.MyDataBase;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class UtilisateurService {
         connection = MyDataBase.getMyDataBase().getCnx();
     }
 
-    // CREATE (Ajouter un utilisateur)
+    // Ajouter un utilisateur
     public boolean ajouterUtilisateur(Utilisateur utilisateur) {
         String query = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role, date_creation) VALUES (?, ?, ?, ?, ?, NOW())";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -31,9 +30,7 @@ public class UtilisateurService {
         return false;
     }
 
-
-
-    // READ (Lister tous les utilisateurs)
+    // Lister tous les utilisateurs
     public List<Utilisateur> getAllUtilisateurs() {
         List<Utilisateur> utilisateurs = new ArrayList<>();
         String query = "SELECT * FROM utilisateur";
@@ -57,7 +54,7 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
-    // UPDATE (Modifier un utilisateur)
+    // Modifier un utilisateur
     public void modifierUtilisateur(Utilisateur utilisateur) {
         String query = "UPDATE utilisateur SET nom=?, prenom=?, email=?, mot_de_passe=?, role=? WHERE id=?";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -74,7 +71,7 @@ public class UtilisateurService {
         }
     }
 
-    // DELETE (Supprimer un utilisateur)
+    // Supprimer un utilisateur
     public void supprimerUtilisateur(int id) {
         String query = "DELETE FROM utilisateur WHERE id=?";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -86,7 +83,7 @@ public class UtilisateurService {
         }
     }
 
-    // AUTHENTIFICATION
+    // Authentifier un utilisateur
     public Utilisateur authentifier(String email, String password) {
         String query = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?";
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -109,5 +106,34 @@ public class UtilisateurService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Méthode pour créer un administrateur par défaut s'il n'existe pas
+    public void createDefaultAdmin() {
+        String checkQuery = "SELECT * FROM utilisateur WHERE email = ?";
+        try (PreparedStatement pst = connection.prepareStatement(checkQuery)) {
+            pst.setString(1, "admin@admin.com");
+            ResultSet rs = pst.executeQuery();
+            if (!rs.next()) {  // Aucun admin trouvé, on le crée
+                Utilisateur defaultAdmin = new Utilisateur(
+                        0,
+                        "Admin",          // Nom
+                        "Default",        // Prénom
+                        "admin@admin.com",// Email
+                        "admin123",       // Mot de passe
+                        "admin",          // Role
+                        null              // La date sera insérée via NOW() dans la requête SQL
+                );
+                if (ajouterUtilisateur(defaultAdmin)) {
+                    System.out.println("Compte administrateur par défaut créé.");
+                } else {
+                    System.err.println("Erreur lors de la création du compte administrateur par défaut.");
+                }
+            } else {
+                System.out.println("Compte administrateur par défaut déjà existant.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
