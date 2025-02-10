@@ -13,6 +13,8 @@ import services.UtilisateurService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.Parent;
+
 
 public class EditUserController implements Initializable {
     @FXML private TextField txtNom;
@@ -73,13 +75,28 @@ public class EditUserController implements Initializable {
     @FXML
     private void retourArriere() {
         try {
+            // Charger la nouvelle vue (UserList.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserList.fxml"));
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            Parent root = loader.load();
+
+            // Obtenir la fenêtre actuelle (celle où tu es en train de modifier l'utilisateur)
+            Stage currentStage = (Stage) btnModifier.getScene().getWindow();
+
+            // Fermer l'ancienne fenêtre (celle de modification)
+            currentStage.close();
+
+            // Créer une nouvelle fenêtre pour afficher la page UserList
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Liste des utilisateurs");
+            newStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     private void fermerFenetre() {
         Stage stage = (Stage) btnSupprimer.getScene().getWindow();

@@ -58,24 +58,48 @@ public class UserListController {
         }
 
         try {
+            // Charger la vue de modification d'utilisateur (EditUser.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditUser.fxml"));
             Parent root = loader.load();
 
+            // Passer l'utilisateur sélectionné au contrôleur d'édition
             EditUserController editUserController = loader.getController();
             editUserController.setUtilisateur(selectedUser);
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Modifier/Supprimer l'utilisateur");
-            stage.show();
+            // Fermer la fenêtre actuelle (UserList.fxml)
+            Stage currentStage = (Stage) userTable.getScene().getWindow();
+            currentStage.close();
+
+            // Ouvrir la fenêtre de modification d'utilisateur
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Modifier/Supprimer l'utilisateur");
+            newStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.close();
+        try {
+            // Charger la vue AdminDashboard.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminDashboard.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la fenêtre actuelle
+            Stage currentStage = (Stage) backButton.getScene().getWindow();
+
+            // Créer une nouvelle scène et la définir sur la fenêtre actuelle
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+            currentStage.show();  // Afficher à nouveau la fenêtre
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
