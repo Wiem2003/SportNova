@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="330.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierAbonnementController">
+    <center>
+        <AnchorPane>
+            <TextField fx:id="typeField" layoutX="20.0" layoutY="20.0" promptText="Type d'abonnement" />
+            <TextField fx:id="dateDebutField" layoutX="20.0" layoutY="60.0" promptText="Date de début" />
+            <TextField fx:id="dateFinField" layoutX="20.0" layoutY="100.0" promptText="Date de fin" />
+            <TextField fx:id="prixField" layoutX="20.0" layoutY="140.0" promptText="Prix" />
+            <TextField fx:id="statutField" layoutX="20.0" layoutY="180.0" promptText="Statut" />
+            <Button fx:id="saveButton" layoutX="20.0" layoutY="220.0" onAction="#handleSaveAction" text="Sauvegarder" />
+            <Button fx:id="deleteButton" layoutX="120.0" layoutY="220.0" onAction="#handleDeleteAction" text="Supprimer" />
+            <Button fx:id="retourButton" layoutX="474.0" layoutY="279.0" onAction="#handleRetour" text="Retour" />
+
+        </AnchorPane>
+    </center>
+</BorderPane>

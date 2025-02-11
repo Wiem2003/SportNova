@@ -24,11 +24,17 @@ public class AdminDashboardController {
         stage.setScene(scene);
     }
 
-
     @FXML
-    private void handleGabuttonAction(ActionEvent event) {
-        // À implémenter si nécessaire
+    private void handleGabuttonAction(ActionEvent event) throws IOException {
+        // Redirige vers "GestionAbonnement.fxml"
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GestionAbonnements.fxml"));
+        Parent gestionAbonnementPage = loader.load();  // Charger la page "GestionAbonnement.fxml"
+        Stage stage = (Stage) gabutton.getScene().getWindow();
+        Scene scene = new Scene(gestionAbonnementPage);  // Créer une nouvelle scène avec la page "GestionAbonnement"
+        stage.setScene(scene);  // Changer la scène actuelle
     }
+
+
 
     @FXML
     private void handleLogoutAction(ActionEvent event) {
