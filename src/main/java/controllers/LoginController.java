@@ -31,25 +31,26 @@ public class LoginController {
         Utilisateur user = utilisateurService.authentifier(email, password);
 
         if (user != null) {
-            // Vérifier que l'utilisateur a le rôle "admin"
-            if ("admin".equalsIgnoreCase(user.getRole())) {
-                showAlert("Succès", "Connexion réussie !");
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminDashboard.fxml"));
-                    Parent root = loader.load();
-                    Scene scene = new Scene(root);
-                    Stage stage = (Stage) loginc.getScene().getWindow();
-                    stage.setScene(scene);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            showAlert("Succès", "Connexion réussie !");
+            try {
+                FXMLLoader loader;
+                if ("admin".equalsIgnoreCase(user.getRole())) {
+                    loader = new FXMLLoader(getClass().getResource("/views/AdminDashboard.fxml"));
+                } else {  // Si ce n'est pas un admin, rediriger vers Client.fxml
+                    loader = new FXMLLoader(getClass().getResource("/views/Client.fxml"));
                 }
-            } else {
-                showAlert("Erreur", "Vous n'avez pas les droits d'administration !");
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) loginc.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
             showAlert("Erreur", "Email ou mot de passe incorrect !");
         }
     }
+
 
     @FXML
     private void handleCreateAccount(MouseEvent event) {
